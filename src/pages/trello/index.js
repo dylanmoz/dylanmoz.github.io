@@ -35,7 +35,7 @@ export default class Trello extends React.Component {
           <TrelloGraph />
         </GraphContainer>
         <p style={{ color: 'rgba(25, 29, 34, 0.38)' }}>
-          <a href="">Source</a>. Inspired by this <a href="https://dribbble.com/shots/3626885-Trello-Atlassian-Stats">trello design</a>.
+          <a href="https://github.com/DylanMoz/dylanmoz.github.io/blob/source/src/pages/trello/TrelloGraph.js">Source</a>. Inspired by this <a href="https://dribbble.com/shots/3626885-Trello-Atlassian-Stats">trello design</a>.
         </p>
       </Container>
     )

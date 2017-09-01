@@ -4,9 +4,20 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@vx/axis": "^0.0.136",
+    "@vx/curve": "^0.0.136",
+    "@vx/grid": "^0.0.136",
+    "@vx/group": "^0.0.136",
+    "@vx/mock-data": "^0.0.136",
+    "@vx/responsive": "^0.0.136",
+    "@vx/scale": "^0.0.136",
+    "@vx/shape": "^0.0.136",
+    "d3-array": "^1.2.0",
     "gatsby": "^1.8.12",
     "gatsby-link": "^1.6.8",
     "gatsby-plugin-react-helmet": "^1.0.3",
+    "glamor": "2.20.40",
+    "glamorous": "4.5.0",
     "typeface-raleway": "0.0.35"
   },
   "keywords": [

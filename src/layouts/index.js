@@ -27,7 +27,7 @@ const TemplateWrapper = ({ children }) =>
 
     <Header />
 
-    <div className="container" style={{ marginTop: '12rem' }}>
+    <div style={{ marginTop: '6.5rem', width: '100%', display: 'flex', position: 'relative' }}>
       {children()}
     </div>
   </div>

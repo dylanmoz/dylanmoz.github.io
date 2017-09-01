@@ -1,3 +1,26 @@
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+  display: flex;
+}
+
+.columns {
+  min-height: 1px;
+}
+
+#___gatsby {
+  width: 100%;
+  display: flex;
+}
+
+[data-reactroot] {
+  align-items: stretch;
+  width: 100%;
+  display: flex;
+}
+
 .navbar {
   position: fixed;
   top: 0;

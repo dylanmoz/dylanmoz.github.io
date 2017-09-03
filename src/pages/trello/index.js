@@ -23,7 +23,8 @@ const GraphContainer = glamorous.div({
   boxShadow: '0 2px 4px 0 rgba(25, 29, 34, 0.1)',
   backgroundColor: 'white',
   padding: 24,
-  color: 'rgba(25, 29, 34, 0.54)'
+  color: 'rgba(25, 29, 34, 0.54)',
+  overflow: 'hidden'
 })
 
 export default class Trello extends React.Component {

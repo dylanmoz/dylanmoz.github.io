@@ -19,6 +19,7 @@
     "d3-array": "^1.2.0",
     "d3-shape": "^1.2.0",
     "fast-memoize": "^2.2.8",
+    "fbjs": "^0.8.14",
     "gatsby": "^1.8.12",
     "gatsby-link": "^1.6.8",
     "gatsby-plugin-react-helmet": "^1.0.3",

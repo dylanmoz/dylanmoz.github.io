@@ -11,6 +11,7 @@ import { scaleTime, scaleLinear } from '@vx/scale'
 import { localPoint } from '@vx/event'
 import { Motion, spring, presets } from 'react-motion'
 import { extent, max, bisector } from 'd3-array'
+import shallowEqual from 'fbjs/lib/shallowEqual'
 
 import Delay from 'utils/Delay'
 import findPathYatX from 'utils/findPathYAtX'
@@ -105,13 +106,16 @@ class TrelloGraph extends React.Component {
     this.update()
   }
 
-  componentWillUpdate() {
-    this.update()
+  componentWillReceiveProps(nextProps) {
+    if (!shallowEqual(this.props, nextProps)) {
+      console.log('yuh')
+      this.update(nextProps)
+    }
   }
 
-  update() {
-    this.xMax = this.getXMax()
-    this.yMax = this.getYMax()
+  update(props = this.props) {
+    this.xMax = this.getXMax(props)
+    this.yMax = this.getYMax(props)
 
     this.xScale = this.getXScale(allData, this.x, this.xMax)
     this.yScale = this.getYScale(allData, this.y, this.yMax)
@@ -136,14 +140,12 @@ class TrelloGraph extends React.Component {
   }
 
   mouseLeave = event => {
-    // console.log('mouse leave')
     this.setState({
       tooltipOpen: false
     })
   }
 
   mouseMove = event => {
-    // console.log('mouse move')
     const { x, y } = localPoint(this.svg, event);
     this.tooltipWidth = this.tooltip.getBoundingClientRect().width
 
@@ -182,12 +184,12 @@ class TrelloGraph extends React.Component {
     })
   }
 
-  getXMax() {
-    return this.props.parentWidth - margin.left - margin.right
+  getXMax(props = this.props) {
+    return props.parentWidth - margin.left - margin.right
   }
 
-  getYMax() {
-    return (this.props.parentWidth * aspectRatio) - margin.top - margin.bottom
+  getYMax(props = this.props) {
+    return (props.parentWidth * aspectRatio) - margin.top - margin.bottom
   }
 
   getXScale = moize.simple((data, x, xMax) => {
@@ -313,7 +315,7 @@ class TrelloGraph extends React.Component {
                     <rect
                       x={style.x}
                       y="0"
-                      width={this.xMax - style.x}
+                      width={Math.max(this.xMax - style.x, 0)}
                       height={this.yMax}
                       fill="white"
                     />

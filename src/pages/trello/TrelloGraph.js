@@ -12,6 +12,7 @@ import { localPoint } from '@vx/event'
 import { Motion, spring, presets } from 'react-motion'
 import { extent, max, bisector } from 'd3-array'
 
+import Delay from 'utils/Delay'
 import findPathYatX from 'utils/findPathYAtX'
 
 // memoizing components improves performance from 30fps to 50+fps on 5x throttled cpu
@@ -286,7 +287,7 @@ class TrelloGraph extends React.Component {
                         cy={y}
                         r={4}
                         fill="white"
-                        stroke={i === 0 ? 'rgb(107, 157, 255)' : 'rgb(252, 137, 159)'}
+                        stroke={colors[i]}
                         strokeWidth="1.2"
                         fillOpacity={style.opacity}
                         strokeOpacity={style.opacity}
@@ -305,6 +306,21 @@ class TrelloGraph extends React.Component {
               onMouseLeave={this.mouseLeave}
               onMouseMove={this.mouseMove}
             />
+            <Delay initial={0} value={this.xMax} period={300}>
+              {delayed => (
+                <Motion defaultStyle={{ x: 0 }} style={{ x: spring(delayed) }}>
+                  {style => (
+                    <rect
+                      x={style.x}
+                      y="0"
+                      width={this.xMax - style.x}
+                      height={this.yMax}
+                      fill="white"
+                    />
+                  )}
+                </Motion>
+              )}
+            </Delay>
           </GroupMem>
           <AxisLeftMem
             top={margin.top}
@@ -365,7 +381,7 @@ class TrelloGraph extends React.Component {
                           width: 8,
                           height: 8,
                           marginRight: 6,
-                          backgroundColor: i === 0 ? 'rgb(107, 157, 255)' : 'rgb(252, 137, 159)'
+                          backgroundColor: colors[i]
                         }}
                       />
                       {d.value}

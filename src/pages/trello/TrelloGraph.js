@@ -283,17 +283,28 @@ class TrelloGraph extends React.Component {
                     const y = this.getPathYFromX(i, style.x)
 
                     return (
-                      <circle
-                        key={i}
-                        cx={style.x}
-                        cy={y}
-                        r={4}
-                        fill="white"
-                        stroke={colors[i]}
-                        strokeWidth="1.2"
-                        fillOpacity={style.opacity}
-                        strokeOpacity={style.opacity}
-                      />
+                      <g key={i}>
+                        <circle
+                          cx={style.x}
+                          cy={y}
+                          r={12}
+                          fill={colors[i]}
+                          stroke={colors[i]}
+                          strokeWidth=".6"
+                          fillOpacity={style.opacity / 12}
+                          strokeOpacity={style.opacity / 2}
+                        />
+                        <circle
+                          cx={style.x}
+                          cy={y}
+                          r={4}
+                          fill="white"
+                          stroke={colors[i]}
+                          strokeWidth="1.5"
+                          fillOpacity={style.opacity}
+                          strokeOpacity={style.opacity}
+                        />
+                      </g>
                     )
                   })}
                 </g>

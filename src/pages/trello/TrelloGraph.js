@@ -9,6 +9,7 @@ import { AxisBottom, AxisLeft } from '@vx/axis'
 import { GridRows } from '@vx/grid'
 import { scaleTime, scaleLinear } from '@vx/scale'
 import { localPoint } from '@vx/event'
+import touchPoint from '@vx/event/build/touchPoint'
 import { Motion, spring, presets } from 'react-motion'
 import { extent, max, bisector } from 'd3-array'
 import shallowEqual from 'fbjs/lib/shallowEqual'
@@ -108,7 +109,6 @@ class TrelloGraph extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!shallowEqual(this.props, nextProps)) {
-      console.log('yuh')
       this.update(nextProps)
     }
   }
@@ -148,16 +148,34 @@ class TrelloGraph extends React.Component {
   }
 
   mouseLeave = event => {
-    this.setState({
-      tooltipOpen: false
-    })
+    this.closeTooltip()
+  }
+
+  touchMove = event => {
+    const { x, y } = touchPoint(this.svg, event)
+    this.showTooltipAt(x, y)
   }
 
   mouseMove = event => {
     const { x, y } = localPoint(this.svg, event);
+    this.showTooltipAt(x, y)
+  }
+
+  showTooltipAt = (x, y) => {
+    const xMax = this.getXMax()
+    const yMax = this.getYMax()
+
+    const positionX = x - margin.left
+    const positionY = y - margin.top
+
+    if (positionX < 0 || positionX > xMax || positionY < 0 || positionY > yMax) {
+      this.closeTooltip()
+      return
+    }
+
     this.tooltipWidth = this.tooltip.getBoundingClientRect().width
 
-    const dataPoints = [data, data2].map((d) => {
+    const dataPoints = series.map((d) => {
       const xDomain = this.xScale.invert(x - margin.left)
 
       const index = bisectDate(d, xDomain, 1)
@@ -169,10 +187,6 @@ class TrelloGraph extends React.Component {
 
       return isRightCloser ? dRight : dLeft
     })
-
-    const xMax = this.getXMax()
-    const positionX = x - margin.left
-    const positionY = y - margin.top
 
     const xOffset = 18
     const yOffset = 18
@@ -189,6 +203,12 @@ class TrelloGraph extends React.Component {
       tooltipLeft,
       tooltipTop,
       vertLineLeft: this.xScale(new Date(dataPoints[0].date))
+    })
+  }
+
+  closeTooltip = () => {
+    this.setState({
+      tooltipOpen: false
     })
   }
 
@@ -215,7 +235,6 @@ class TrelloGraph extends React.Component {
   })
 
   getPathYFromX = (index, x) => {
-    // const key = `${index}-${x}`
     const path = this.pathRefs[index]
 
     return findPathYatX(x, path, index)
@@ -326,6 +345,7 @@ class TrelloGraph extends React.Component {
               fill="transparent"
               onMouseLeave={this.mouseLeave}
               onMouseMove={this.mouseMove}
+              onTouchMove={this.touchMove}
             />
             <Delay initial={0} value={this.xMax} period={300}>
               {delayed => (

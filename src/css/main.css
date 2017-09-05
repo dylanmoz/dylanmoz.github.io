@@ -6,6 +6,15 @@ body {
   display: flex;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+ul, ol {
+  padding-left: 40px;
+  list-style-position: outside;
+}
+
 .columns {
   min-height: 1px;
 }

@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import Link from 'gatsby-link'
 import Helmet from 'react-helmet'
 
-import './index.css'
+import 'typeface-raleway'
+
+import 'css/normalize.css'
+import 'css/skeleton.css'
+import 'css/main.css'
 
 const NavbarLink = props =>
   <li className="navbar-item">

@@ -26,6 +26,7 @@
     "gatsby-plugin-react-helmet": "^1.0.3",
     "glamor": "2.20.40",
     "glamorous": "4.5.0",
+    "glamorous-grid": "^1.0.1",
     "lodash": "^4.17.4",
     "moize": "^3.4.0",
     "react-motion": "^0.5.1",

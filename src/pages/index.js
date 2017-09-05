@@ -2,6 +2,10 @@ import React from 'react'
 import Link from 'gatsby-link'
 import { css } from 'glamor'
 import glamorous from 'glamorous'
+import { Container, Row, Col } from 'glamorous-grid'
+import { Motion, spring } from 'react-motion'
+
+import Delay from 'utils/Delay'
 
 const opacity = css.keyframes({
   '0%': { opacity: 0 },
@@ -51,8 +55,7 @@ const Index = glamorous.div({
 })
 
 const Card = glamorous.div({
-  // color: 'white'
-  // backgroundImage: 'linear-gradient(#f0f0ec, #f0f0ec), linear-gradient(#f0f0ec, #f0f0ec)',
+  position: 'relative',
   background: 'white',
   borderRadius: '3px',
   padding: '24px',
@@ -60,23 +63,46 @@ const Card = glamorous.div({
   border: '1px solid #eee'
 })
 
+const AnimatedCard = ({ children }) => (
+  <Delay initial={1} value={0} period={300}>
+    {delayed => (
+      <Motion
+        defaultStyle={{ top: 30, opacity: 0 }}
+        style={{
+          top: spring(delayed * 30),
+          opacity: spring(delayed === 1 ? 0 : 1)
+        }}
+      >
+        {style => (
+          <Card
+            style={{
+              top: style.top,
+              opacity: style.opacity
+            }}
+          >
+            {children}
+          </Card>
+        )}
+      </Motion>
+    )}
+  </Delay>
+)
+
 const IndexPage = () =>
   <Index>
     <div className="container">
       <div style={{ paddingTop: '48px' }}>
-        <div className="row">
-          <div className="three columns"></div>
-          <div className="six columns">
-            <Card>
+        <Row justifyContent="center">
+          <Col span={{ xs: 1, sm: 9/12, md: 8/12, lg: 6/12, xl: 5/12 }}>
+            <AnimatedCard>
               <h4>Welcome</h4>
               <p>I'm Dylan. Here's my <a href="https://www.github.com/dylanmoz">github</a> and <a href="mailto:dylan.mozlowski@gmail.com">email</a>. Check out the following demos:</p>
               <ul>
                 <li><Link to="/trello">Trello Line Graph</Link></li>
               </ul>
-            </Card>
-          </div>
-          <div className="three columns"></div>
-        </div>
+            </AnimatedCard>
+          </Col>
+        </Row>
       </div>
     </div>
   </Index>

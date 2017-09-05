@@ -71,9 +71,27 @@ const AnimatedCard = ({ children, style, ...others }) => (
 )
 
 class ClickableCard extends React.Component {
-  state = { hover: false }
+  state = { hover: false, x: 0, y: 0 }
 
-  mouseEnter = () => {
+  setCardRef = (ref) => {
+    this.card = ref
+  }
+
+  mouseMove = (event) => {
+    const { top, left, width, height } = this.card.getBoundingClientRect()
+
+    const xFromOrigin = event.clientX - left - (width / 2)
+    const yFromOrigin = event.clientY - top - (height / 2)
+
+    console.log(xFromOrigin, yFromOrigin)
+
+    this.setState({
+      x: xFromOrigin,
+      y: yFromOrigin
+    })
+  }
+
+  mouseEnter = (event) => {
     this.setState({ hover: true })
   }
 
@@ -82,7 +100,7 @@ class ClickableCard extends React.Component {
   }
 
   render() {
-    const { hover } = this.state
+    const { hover, x, y } = this.state
     const { children, to, href } = this.props
 
     const LinkComponent = href ? 'a' : Link
@@ -90,22 +108,28 @@ class ClickableCard extends React.Component {
 
     return (
       <Motion
-        defaultStyle={{ scale: 1, shadow: 1 }}
+        defaultStyle={{ scale: 1, shadow: 1, rotate: 0, x: 0, y: 0 }}
         style={{
           scale: spring(hover ? 1.05 : 1),
-          shadow: spring(hover ? 16 : 1)
+          shadow: spring(hover ? 16 : 1),
+          rotate: spring(hover ? 1 : 0, { stiffness: 100, damping: 26 }),
+          x: spring(x),
+          y: spring(y)
         }}
       >
-        {({ scale, shadow, rotate }) => (
+        {({ scale, shadow, rotate, x, y }) => (
           <LinkComponent {...linkProps} style={{ textDecoration: 'none' }}>
             <AnimatedCard
+              innerRef={this.setCardRef}
               style={{
+                transformOrigin: '50% 50%',
                 cursor: 'pointer',
                 boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
-                transform: `scale(${scale})`
+                transform: `scale(${scale}) perspective(100px) rotate3d(${y}, ${-x}, 0, ${rotate}deg)`
               }}
               onMouseEnter={this.mouseEnter}
               onMouseLeave={this.mouseLeave}
+              onMouseMove={this.mouseMove}
             >
               {children}
             </AnimatedCard>

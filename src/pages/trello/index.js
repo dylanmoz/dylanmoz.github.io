@@ -21,7 +21,7 @@ export default class Trello extends React.Component {
         <Row style={{ height: '100%' }}>
           <Col alignSelf="center">
             <Row justifyContent="center">
-              <Col span={{ xs: 1, sm: 10/12, md: 8/12, lg: 8/12, xl: 6/12 }}>
+              <Col span={{ xs: 1, sm: 10/12, md: 9/12, lg: 8/12, xl: 6/12 }}>
                 <GraphContainer p={{ xs: 12, sm: 24 }}>
                   <h5>Recent Activity</h5>
                   <TrelloGraph />

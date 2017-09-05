@@ -132,10 +132,18 @@ class TrelloGraph extends React.Component {
 
   setTooltipRef = (ref) => {
     this.tooltip = ref
-    this.tooltipWidth = ref.getBoundingClientRect().width
+
+    if (this.tooltip) {
+      this.tooltipWidth = ref.getBoundingClientRect().width
+    }
   }
 
   setPathRef = (ref) => {
+    if (!ref) {
+      this.pathRefs = null
+      return
+    }
+
     this.pathRefs[ref.getAttribute('data-index')] = ref
   }
 

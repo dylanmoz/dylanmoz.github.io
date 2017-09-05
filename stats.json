@@ -13,8 +13,8 @@
       "path---trello-trello-graph-a0e39f21c11f6a62c5ab.js.map"
     ],
     "component---src-layouts-index-js": [
-      "component---src-layouts-index-js-8e2c10a17c6245967c8a.js",
-      "component---src-layouts-index-js-8e2c10a17c6245967c8a.js.map"
+      "component---src-layouts-index-js-ece1c270ccf1580a284d.js",
+      "component---src-layouts-index-js-ece1c270ccf1580a284d.js.map"
     ],
     "path---page-2": [
       "path---page-2-a0e39f21c11f6a62c5ab.js",
@@ -50,7 +50,9 @@
     ],
     "app": [
       "app-c104413ff5867390e6e9.js",
-      "app-c104413ff5867390e6e9.js.map"
+      "build-js-styles.css",
+      "app-c104413ff5867390e6e9.js.map",
+      "build-js-styles.css.map"
     ],
     "component---src-pages-trello-trello-graph-js": [
       "component---src-pages-trello-trello-graph-js-02730743851ec6a47e4a.js",

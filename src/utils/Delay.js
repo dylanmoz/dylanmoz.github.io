@@ -14,13 +14,24 @@ export default class Delay extends React.Component {
   }
 
   componentWillReceiveProps(next) {
-    this.refresh(next)
+    // if (!this.unmounting) {
+    //   this.refresh(next)
+    // }
+  }
+
+  componentWillUnmount() {
+    this.unmounting = true
+
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+      this.timeout = 0
+    }
   }
 
   refresh(props) {
     let { value, period } = props
 
-    setTimeout(() => this.setState({
+    this.timeout = setTimeout(() => this.setState({
       value
     }), period)
   }

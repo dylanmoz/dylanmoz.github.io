@@ -26,36 +26,12 @@ const Index = glamorous.div({
   position: 'relative',
   zIndex: 1,
   width: '100%',
-  background: 'rgb(246, 247, 251)',
-  // backgroundImage: 'linear-gradient(to bottom right, #3f51b5, #2196f3)',
-  // '&:before, &:after': {
-  //   content: '""',
-  //   position: 'absolute',
-  //   top: 0,
-  //   left: 0,
-  //   width: '100%',
-  //   height: '100%',
-  //   animationIterationCount: 'infinite',
-  // },
-  // '&:before': {
-  //   backgroundImage: 'linear-gradient(to bottom right, #2196f3, #03a9f4)',
-  //   backgroundPosition: 'center center',
-  //   backgroundRepeat: 'no-repeat',
-  //   animationName: opacity,
-  //   animationDuration: '12s'
-  // },
-  // '&:after': {
-  //   zIndex: -1,
-  //   backgroundImage: 'linear-gradient(to bottom right, #03a9f4, #303f9f)',
-  //   backgroundPosition: 'center center',
-  //   backgroundRepeat: 'no-repeat',
-  //   animationName: opacity2,
-  //   animationDuration: '12s',
-  // }
+  background: 'rgb(246, 247, 251)'
 })
 
 const Card = glamorous.div({
   position: 'relative',
+  height: '100%',
   background: 'white',
   borderRadius: '3px',
   padding: '24px',
@@ -103,7 +79,10 @@ class ClickableCard extends React.Component {
 
   render() {
     const { hover } = this.state
-    const { children, to } = this.props
+    const { children, to, href } = this.props
+
+    const LinkComponent = href ? 'a' : Link
+    const linkProps = { [href ? 'href': 'to']: href || to }
 
     return (
       <Motion
@@ -114,7 +93,7 @@ class ClickableCard extends React.Component {
         }}
       >
         {({ scale, shadow, rotate }) => (
-          <Link to={to}>
+          <LinkComponent {...linkProps} style={{ textDecoration: 'none' }}>
             <AnimatedCard
               style={{
                 cursor: 'pointer',
@@ -126,31 +105,58 @@ class ClickableCard extends React.Component {
             >
               {children}
             </AnimatedCard>
-          </Link>
+          </LinkComponent>
         )}
       </Motion>
     )
   }
 }
 
+const PseudoLink = glamorous.div({
+  color: '#1EAEDB',
+  textDecoration: 'underline'
+})
+
+const TitleCard = glamorous(AnimatedCard)({
+  color: 'white',
+  backgroundImage: 'linear-gradient(45deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%)',
+
+  '& a': {
+    color: 'white'
+  }
+})
+
 const IndexPage = () =>
   <Index>
     <Container py={36}>
       <Row justifyContent="center">
         <Col span={{ xs: 1, sm: 9/12, md: 8/12, lg: 6/12, xl: 5/12 }}>
-          <AnimatedCard>
+          <TitleCard>
             <h3 style={{ marginBottom: 12 }}>Hey, I'm Dylan</h3>
             <h6 style={{ marginBottom: 12 }}>Software Engineer @ <a href="https://www.classy.org">classy.org</a></h6>
-            <h6><a href="mailto:dylan.mozlowski@gmail.com">dylan.mozlowski@gmail.com</a></h6>
-          </AnimatedCard>
+            <h6 style={{ marginBottom: 0 }}>
+              <a href="mailto:dylan.mozlowski@gmail.com">dylan.mozlowski@gmail.com</a>
+            </h6>
+          </TitleCard>
+
         </Col>
       </Row>
-      <Row justifyContent="center" mt={24}>
-        <Col span={{ xs: 1, sm: 9/12, md: 8/12, lg: 6/12, xl: 5/12 }}>
-          <ClickableCard to="/trello">
-            <h5>Trello Line Graph</h5>
-            <TrelloGraph />
-          </ClickableCard>
+      <Row justifyContent="center">
+        <Col span={{ xs: 1, md: 10/12 }}>
+          <Row alignItems="stretch">
+            <Col span={{ xs: 1, md: 1/2 }} pt={24}>
+              <ClickableCard to="/trello">
+                <PseudoLink><h5>Trello Line Graph</h5></PseudoLink>
+                <TrelloGraph />
+              </ClickableCard>
+            </Col>
+            <Col span={{ xs: 1, md: 1/2 }} pt={24}>
+              <ClickableCard href="https://dylanmoz.github.io/glamorous-grid">
+                <PseudoLink><h5>glamorous-grid</h5></PseudoLink>
+                <p>Responsive React grid layout components, built with glamorous</p>
+              </ClickableCard>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>

@@ -36,7 +36,11 @@ const Card = glamorous.div({
   borderRadius: '3px',
   padding: '24px',
   boxShadow: '0 2px 4px 0 rgba(25, 29, 34, 0.1)',
-  border: '1px solid #eee'
+  border: '1px solid #eee',
+  '& p, & p:hover, & p:active, & p:visited': {
+    textDecoration: 'none !important',
+    color: '#222'
+  }
 })
 
 const AnimatedCard = ({ children, style, ...others }) => (

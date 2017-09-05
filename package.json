@@ -30,6 +30,7 @@
     "glamorous-grid": "^1.0.1",
     "lodash": "^4.17.4",
     "moize": "^3.4.0",
+    "react-icons": "^2.2.5",
     "react-motion": "^0.5.1",
     "typeface-raleway": "0.0.35"
   },

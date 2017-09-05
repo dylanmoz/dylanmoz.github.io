@@ -95,8 +95,10 @@ const IndexPage = () =>
         <Row justifyContent="center">
           <Col span={{ xs: 1, sm: 9/12, md: 8/12, lg: 6/12, xl: 5/12 }}>
             <AnimatedCard>
-              <h4>Welcome</h4>
-              <p>I'm Dylan. Here's my <a href="https://www.github.com/dylanmoz">github</a> and <a href="mailto:dylan.mozlowski@gmail.com">email</a>. Check out the following demos:</p>
+              <h3 style={{ marginBottom: 12 }}>Hey, I'm Dylan</h3>
+              <h6 style={{ marginBottom: 12 }}>Software Engineer @ <a href="https://www.classy.org">classy.org</a></h6>
+              <h6><a href="mailto:dylan.mozlowski@gmail.com">dylan.mozlowski@gmail.com</a></h6>
+              <p>Check out the following demos:</p>
               <ul>
                 <li><Link to="/trello">Trello Line Graph</Link></li>
               </ul>

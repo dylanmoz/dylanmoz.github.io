@@ -32,7 +32,7 @@ export default class Trello extends React.Component {
               <Col span={{ xs: 1, sm: 9/12, md: 8/12 }} textAlign="center">
                 <p style={{ marginBottom: 0, color: 'rgba(25, 29, 34, 0.38)' }}>Desktop: hover for tooltip. Mobile: Touch or drag for tooltip.</p>
                 <p style={{ color: 'rgba(25, 29, 34, 0.38)' }}>
-                  <a href="https://github.com/DylanMoz/dylanmoz.github.io/blob/source/src/pages/trello/TrelloGraph.js">Source</a>. Inspired by this <a href="https://dribbble.com/shots/3626885-Trello-Atlassian-Stats">trello design</a>.
+                  <a href="https://github.com/DylanMoz/dylanmoz.github.io/blob/source/src/pages/trello/TrelloGraph.js">Source</a>. <a href="https://devblog.classy.org/how-to-make-beautiful-graphs-with-vx-and-react-motion-6ffe7aecf6f3">Medium post</a>. Inspired by this <a href="https://dribbble.com/shots/3626885-Trello-Atlassian-Stats">trello design</a>.
                 </p>
               </Col>
             </Row>

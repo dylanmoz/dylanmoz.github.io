@@ -71,7 +71,7 @@ const AnimatedCard = ({ children, style, ...others }) => (
 )
 
 class ClickableCard extends React.Component {
-  state = { hover: false, x: 0, y: 0 }
+  state = { hover: false, x: 0, y: 0, magnitude: 0, maxMagnitude: 0 }
 
   setCardRef = (ref) => {
     this.card = ref
@@ -83,11 +83,24 @@ class ClickableCard extends React.Component {
     const xFromOrigin = event.clientX - left - (width / 2)
     const yFromOrigin = event.clientY - top - (height / 2)
 
-    console.log(xFromOrigin, yFromOrigin)
+    const largest = Math.max(width, height)
+    const heightWeight = largest / height
+    const widthWeight = largest / width
+
+    const xOriginWeighted = xFromOrigin * widthWeight
+    const yOriginWeighted = yFromOrigin * heightWeight
+
+    const widthWeighted = width * widthWeight
+    const heightWeighted = height * heightWeight
+
+    const magnitude = Math.sqrt((xOriginWeighted * xOriginWeighted) + (yOriginWeighted * yOriginWeighted))
+    const maxMagnitude = Math.sqrt(((widthWeighted * widthWeighted) / 4) + ((heightWeighted * heightWeighted) / 4))
 
     this.setState({
       x: xFromOrigin,
-      y: yFromOrigin
+      y: yFromOrigin,
+      magnitude,
+      maxMagnitude
     })
   }
 
@@ -100,7 +113,7 @@ class ClickableCard extends React.Component {
   }
 
   render() {
-    const { hover, x, y } = this.state
+    const { hover, x, y, magnitude, maxMagnitude } = this.state
     const { children, to, href } = this.props
 
     const LinkComponent = href ? 'a' : Link
@@ -113,8 +126,8 @@ class ClickableCard extends React.Component {
           scale: spring(hover ? 1.05 : 1),
           shadow: spring(hover ? 16 : 1),
           rotate: spring(hover ? 1 : 0, { stiffness: 100, damping: 26 }),
-          x: spring(x),
-          y: spring(y)
+          x: spring(x, { stiffness: 100, damping: 26 }),
+          y: spring(y, { stiffness: 100, damping: 26 })
         }}
       >
         {({ scale, shadow, rotate, x, y }) => (
@@ -125,7 +138,7 @@ class ClickableCard extends React.Component {
                 transformOrigin: '50% 50%',
                 cursor: 'pointer',
                 boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
-                transform: `scale(${scale}) perspective(100px) rotate3d(${y}, ${-x}, 0, ${rotate}deg)`
+                transform: `scale(${scale}) perspective(200px) rotate3d(${y}, ${-x}, 0, ${rotate * (magnitude / maxMagnitude)}deg)`
               }}
               onMouseEnter={this.mouseEnter}
               onMouseLeave={this.mouseLeave}
